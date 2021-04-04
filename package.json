@@ -1,6 +1,6 @@
 {
 	"name": "tcp-dump-server",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "A debug tcp server that just dumps to the command line.",
 	"license": "MIT",
 	"repository": "jamestalmage/tcp-dump-server",
