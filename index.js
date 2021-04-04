@@ -1,25 +1,32 @@
 import net from 'net';
 import {StringDecoder} from 'string_decoder';
 
-const tcpServer = ({port, sep, hex, maxLength = 1024}) => {
+const defaultHexEmit = bytes => {
+	let s = '';
+	for (let i = 0; i < bytes.length; i++) { // eslint-disable-line unicorn/no-for-loop
+		s += bytes[i];
+		if (i % 2 === 1) {
+			s += ' ';
+		}
+	}
+
+	return s;
+};
+
+const identityFn = bytes => bytes;
+
+const tcpServer = ({port, sep, hex, maxLength = 1024, emit}) => {
+	emit = emit || (hex ? defaultHexEmit : identityFn);
+
 	const handleConnection = conn => {
 		const remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
 		console.log('new client connection from %s', remoteAddress);
 		const decoder = new StringDecoder(hex ? 'hex' : 'utf8');
 
-		const emit = bytes => {
-			if (hex) {
-				let s = '';
-				for (const [index, byte] of bytes) {
-					s += byte;
-					if (index % 2 === 1) {
-						s += ' ';
-					}
-				}
-
+		const emitWrapper = bytes => {
+			const s = emit(bytes);
+			if (s) {
 				console.log(s);
-			} else {
-				console.log(bytes);
 			}
 		};
 
@@ -35,7 +42,7 @@ const tcpServer = ({port, sep, hex, maxLength = 1024}) => {
 			}
 
 			for (const bytes of pieces) {
-				emit(bytes);
+				emitWrapper(bytes);
 			}
 		};
 

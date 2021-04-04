@@ -21,7 +21,7 @@ tcpDumpServer({port, sep, hex});
 
 ## API
 
-### tcpDumpServer(input, options?)
+### tcpDumpServer(options)
 
 #### port
 
@@ -35,12 +35,18 @@ Type: `string`
 
 The line or command separator. Defaults to `"ff"` if `hex` flag is used, otherwise defaults to `\r\n`.
 
-##### hex
+#### hex
 
 Type: `boolean`\
 Default: `false`
 
 If true, incoming bytes are printed as hex characters (and `sep` is matched against those hex characters). Otherwise, treated as `utf8` incoded string.
+
+#### emit
+
+Type: `(string) => string | null | undefined`
+
+A function to manipulate a command or line of output before printing. Output a falsy value to ignore / skip printing. Input will be a hex string (hex mode), or ASCII string (text mode). Defaults to a pretty print function for `hex`, and an identity function for text mode.
 
 ## CLI
 
