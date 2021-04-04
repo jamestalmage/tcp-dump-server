@@ -1,0 +1,36 @@
+{
+	"name": "tcp-dump-server",
+	"version": "0.0.0",
+	"description": "A debug tcp server that just dumps to the command line.",
+	"license": "MIT",
+	"repository": "jamestalmage/tcp-dump-server",
+	"author": {
+		"name": "jamestalmage",
+		"email": "james@talmage.io",
+		"url": "http://github.com/jamestalmage"
+	},
+	"type": "module",
+	"bin": "cli.js",
+	"engines": {
+		"node": ">=12"
+	},
+	"scripts": {
+		"test": "xo"
+	},
+	"files": [
+		"index.js",
+		"cli.js"
+	],
+	"keywords": [
+		"cli-app",
+		"cli",
+		""
+	],
+	"dependencies": {
+		"hex": "^0.1.0",
+		"meow": "^9.0.0"
+	},
+	"devDependencies": {
+		"xo": "^0.38.0"
+	}
+}
